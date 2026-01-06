@@ -16,9 +16,16 @@ import {
   ClipboardCheck,
   Settings,
   ThumbsUp,
-  ArrowRight
+  ArrowRight,
+  MessageCircle
 } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
+
 import { Button } from "@/components/ui/button";
+
+const WHATSAPP_NUMBER = "5511947396500";
+const WHATSAPP_MESSAGE = "Olá! Gostaria de solicitar um orçamento para meu veículo.";
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
 // --- ANIMATION VARIANTS ---
 const fadeInUp = {
@@ -77,10 +84,12 @@ export default function Home() {
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="bg-secondary hover:bg-secondary/90 text-secondary-foreground text-lg font-bold px-8 h-14 rounded-full shadow-lg shadow-yellow-500/25 transition-transform hover:-translate-y-1"
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="bg-[#25D366] hover:bg-[#20bd5a] text-white text-lg font-bold px-8 h-14 rounded-full shadow-lg shadow-green-500/25 transition-transform hover:-translate-y-1"
+                onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+                data-testid="button-whatsapp-hero"
               >
-                Solicitar Orçamento
+                <SiWhatsapp className="w-6 h-6 mr-2" />
+                Falar no WhatsApp
               </Button>
               <Button 
                 size="lg" 
@@ -322,12 +331,12 @@ export default function Home() {
                 <ContactInfoItem 
                   icon={<MapPin className="w-6 h-6 text-secondary" />}
                   title="Endereço"
-                  content="Rua das Oficinas, 123 - Bairro Industrial, São Paulo - SP"
+                  content="R. Tabor, 363 / 367 - Ipiranga, São Paulo - SP, 04202-020"
                 />
                 <ContactInfoItem 
                   icon={<Phone className="w-6 h-6 text-secondary" />}
                   title="Telefone / WhatsApp"
-                  content="(11) 99999-9999"
+                  content="(11) 94739-6500"
                 />
                 <ContactInfoItem 
                   icon={<Clock className="w-6 h-6 text-secondary" />}
@@ -336,21 +345,19 @@ export default function Home() {
                 />
               </div>
 
-              {/* Map Placeholder */}
+              {/* Map */}
               <div className="mt-12 w-full h-64 bg-slate-100 rounded-2xl overflow-hidden border border-slate-200 shadow-inner relative group">
-                {/* Static map image or placeholder */}
-                <div className="absolute inset-0 bg-slate-200 flex items-center justify-center">
-                  <span className="text-slate-400 font-medium">Mapa de Localização</span>
-                </div>
-                {/* Interactive Overlay */}
-                <a 
-                  href="https://maps.google.com" 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100"
-                >
-                  <Button variant="secondary" size="sm">Ver no Google Maps</Button>
-                </a>
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.6774899999997!2d-46.6033!3d-23.5836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5a2b2ed7f3a7%3A0x8f0b0b0b0b0b0b0b!2sR.%20Tabor%2C%20363%20-%20Ipiranga%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1234567890"
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Localização ArtCar"
+                  className="absolute inset-0"
+                />
               </div>
             </motion.div>
 
@@ -359,8 +366,24 @@ export default function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-col items-center justify-center bg-gradient-to-br from-[#25D366] to-[#128C7E] rounded-3xl p-10 text-white text-center"
             >
-              <ContactForm />
+              <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-6">
+                <SiWhatsapp className="w-14 h-14" />
+              </div>
+              <h3 className="text-3xl md:text-4xl font-display font-bold mb-4">Fale Conosco pelo WhatsApp</h3>
+              <p className="text-white/90 text-lg mb-8 max-w-md">
+                Atendimento rápido e personalizado. Solicite seu orçamento agora mesmo!
+              </p>
+              <Button 
+                size="lg"
+                className="bg-white text-[#25D366] hover:bg-white/90 text-lg font-bold px-10 h-14 rounded-full shadow-xl transition-transform hover:-translate-y-1"
+                onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+                data-testid="button-whatsapp-contact"
+              >
+                <SiWhatsapp className="w-6 h-6 mr-2" />
+                (11) 94739-6500
+              </Button>
             </motion.div>
           </div>
         </div>

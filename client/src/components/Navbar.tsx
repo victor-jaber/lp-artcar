@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 import logoImg from "@assets/artcar-logo.png";
 import { Button } from "@/components/ui/button";
+
+const WHATSAPP_LINK = "https://wa.me/5511947396500?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20meu%20ve%C3%ADculo.";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,14 +68,12 @@ export function Navbar() {
             </a>
           ))}
           <Button 
-            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold rounded-full px-6 shadow-lg shadow-yellow-500/20"
-            onClick={(e) => {
-              const el = document.querySelector("#contact");
-              el?.scrollIntoView({ behavior: "smooth" });
-            }}
+            className="bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-full px-6 shadow-lg shadow-green-500/20"
+            onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+            data-testid="button-whatsapp-header"
           >
-            <Phone className="w-4 h-4 mr-2" />
-            Agendar Agora
+            <SiWhatsapp className="w-4 h-4 mr-2" />
+            WhatsApp
           </Button>
         </nav>
 
@@ -107,14 +108,15 @@ export function Navbar() {
           ))}
           <Button 
             size="lg"
-            className="mt-4 bg-primary text-white w-48 rounded-full"
-            onClick={(e) => {
-              const el = document.querySelector("#contact");
-              el?.scrollIntoView({ behavior: "smooth" });
+            className="mt-4 bg-[#25D366] text-white w-48 rounded-full"
+            onClick={() => {
+              window.open(WHATSAPP_LINK, '_blank');
               setIsMobileMenuOpen(false);
             }}
+            data-testid="button-whatsapp-mobile"
           >
-            Orçamento Grátis
+            <SiWhatsapp className="w-5 h-5 mr-2" />
+            WhatsApp
           </Button>
         </div>
       </div>
