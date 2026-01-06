@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Menu, X, Phone } from "lucide-react";
-import logoImg from "@assets/Captura_de_Tela_2026-01-05_às_20.29.24_1767740098887.png";
+import logoImg from "@assets/artcar-logo.png";
 import { Button } from "@/components/ui/button";
 
 export function Navbar() {
@@ -40,12 +40,12 @@ export function Navbar() {
           : "bg-transparent py-6"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <Link href="/" className="relative z-50">
+      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between gap-12">
+        <Link href="/" className="relative z-50 flex-shrink-0 mr-8">
           <img 
             src={logoImg} 
             alt="ArtCar Logo" 
-            className="h-12 md:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300 mix-blend-multiply"
+            className="h-12 md:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300"
             style={{ filter: isScrolled ? 'none' : 'brightness(0) invert(1)' }}
           />
         </Link>
