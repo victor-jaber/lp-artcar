@@ -116,7 +116,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            className="flex flex-col md:flex-row items-center justify-around gap-12 md:gap-8 text-center"
           >
             <StatCard number="15+" label="Anos de Experiência" delay={0} />
             <StatCard number="5000+" label="Clientes Satisfeitos" delay={0.1} />
