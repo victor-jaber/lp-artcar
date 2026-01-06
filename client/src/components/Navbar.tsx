@@ -45,12 +45,13 @@ export function Navbar() {
           <img 
             src={logoImg} 
             alt="ArtCar Logo" 
-            className="h-12 md:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300"
+            className="h-12 md:h-16 w-auto object-contain hover:scale-105 transition-transform duration-300 mix-blend-multiply"
+            style={{ filter: isScrolled ? 'none' : 'brightness(0) invert(1)' }}
           />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
             <a
               key={link.label}

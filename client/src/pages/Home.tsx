@@ -12,7 +12,11 @@ import {
   Phone,
   Clock,
   Instagram,
-  Facebook
+  Facebook,
+  ClipboardCheck,
+  Settings,
+  ThumbsUp,
+  ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -87,6 +91,28 @@ export default function Home() {
                 Conhecer Serviços
               </Button>
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* --- STATS SECTION --- */}
+      <section className="py-20 bg-gradient-to-r from-primary via-blue-800 to-primary relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-400 rounded-full blur-3xl" />
+        </div>
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+          >
+            <StatCard number="15+" label="Anos de Experiência" delay={0} />
+            <StatCard number="5000+" label="Clientes Satisfeitos" delay={0.1} />
+            <StatCard number="8000+" label="Veículos Restaurados" delay={0.2} />
+            <StatCard number="100%" label="Garantia de Qualidade" delay={0.3} />
           </motion.div>
         </div>
       </section>
@@ -182,6 +208,53 @@ export default function Home() {
                 </Button>
               </motion.div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- PROCESS SECTION --- */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-50 to-transparent pointer-events-none" />
+        <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-secondary font-bold uppercase tracking-widest text-sm mb-3">Como Funciona</h2>
+            <h3 className="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-4">Nosso Processo</h3>
+            <p className="text-slate-600 text-lg">
+              Transparência e qualidade em cada etapa do serviço.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+            <div className="hidden md:block absolute top-20 left-[12%] right-[12%] h-1 bg-gradient-to-r from-secondary via-primary to-secondary rounded-full" />
+            
+            <ProcessStep 
+              step={1}
+              icon={<ClipboardCheck className="w-8 h-8" />}
+              title="Avaliação"
+              description="Realizamos uma análise completa do veículo e elaboramos um orçamento detalhado."
+              delay={0}
+            />
+            <ProcessStep 
+              step={2}
+              icon={<Settings className="w-8 h-8" />}
+              title="Execução"
+              description="Nossa equipe especializada executa o serviço com precisão e materiais premium."
+              delay={0.15}
+            />
+            <ProcessStep 
+              step={3}
+              icon={<CheckCircle2 className="w-8 h-8" />}
+              title="Controle de Qualidade"
+              description="Inspeção rigorosa para garantir que tudo esteja perfeito antes da entrega."
+              delay={0.3}
+            />
+            <ProcessStep 
+              step={4}
+              icon={<ThumbsUp className="w-8 h-8" />}
+              title="Entrega"
+              description="Seu veículo pronto, com garantia e a satisfação de um trabalho bem feito."
+              delay={0.45}
+            />
           </div>
         </div>
       </section>
@@ -376,5 +449,52 @@ function ContactInfoItem({ icon, title, content }: { icon: React.ReactNode, titl
         <p className="text-slate-600">{content}</p>
       </div>
     </div>
+  );
+}
+
+function StatCard({ number, label, delay }: { number: string, label: string, delay: number }) {
+  return (
+    <motion.div
+      variants={fadeInUp}
+      className="p-6"
+    >
+      <motion.div
+        initial={{ scale: 0.5, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: delay + 0.2, type: "spring" }}
+        className="text-5xl md:text-6xl font-display font-bold text-secondary mb-2"
+      >
+        {number}
+      </motion.div>
+      <p className="text-white/80 text-sm md:text-base font-medium uppercase tracking-wider">{label}</p>
+    </motion.div>
+  );
+}
+
+function ProcessStep({ step, icon, title, description, delay }: { step: number, icon: React.ReactNode, title: string, description: string, delay: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay }}
+      className="flex flex-col items-center text-center relative"
+    >
+      <motion.div
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: delay + 0.2, type: "spring", stiffness: 200 }}
+        className="relative z-10 w-16 h-16 rounded-full bg-gradient-to-br from-primary to-blue-700 text-white flex items-center justify-center shadow-lg shadow-primary/30 mb-6"
+      >
+        {icon}
+        <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-secondary text-secondary-foreground text-sm font-bold flex items-center justify-center shadow-md">
+          {step}
+        </div>
+      </motion.div>
+      <h4 className="text-xl font-bold text-slate-900 mb-2">{title}</h4>
+      <p className="text-slate-600 text-sm leading-relaxed">{description}</p>
+    </motion.div>
   );
 }
