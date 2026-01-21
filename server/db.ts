@@ -1,14 +1,22 @@
-import { drizzle } from "drizzle-orm/node-postgres";
+import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
 import pg from "pg";
 import * as schema from "@shared/schema";
 
 const { Pool } = pg;
+const connectionString = process.env.DATABASE_URL;
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
-  );
+// Allow the server to run without a database for purely static deployments.
+export const databaseEnabled = Boolean(connectionString);
+
+let pool: pg.Pool | null = null;
+let db: NodePgDatabase<typeof schema> | null = null;
+
+if (databaseEnabled) {
+  pool = new Pool({ connectionString });
+  db = drizzle(pool, { schema });
+} else {
+  // eslint-disable-next-line no-console
+  console.warn("DATABASE_URL not set; running without a database. Inquiries will not be persisted.");
 }
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle(pool, { schema });
+export { pool, db };

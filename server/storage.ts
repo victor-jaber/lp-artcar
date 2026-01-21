@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db, databaseEnabled } from "./db";
 import {
   inquiries,
   type InsertInquiry,
@@ -10,10 +10,38 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
+  constructor(private readonly database: NonNullable<typeof db> = db!) {
+    if (!database) {
+      throw new Error("Database is not configured");
+    }
+  }
+
   async createInquiry(insertInquiry: InsertInquiry): Promise<Inquiry> {
-    const [inquiry] = await db.insert(inquiries).values(insertInquiry).returning();
+    const [inquiry] = await this.database
+      .insert(inquiries)
+      .values(insertInquiry)
+      .returning();
     return inquiry;
   }
 }
 
-export const storage = new DatabaseStorage();
+class InMemoryStorage implements IStorage {
+  private idCounter = 1;
+
+  async createInquiry(insertInquiry: InsertInquiry): Promise<Inquiry> {
+    // Mimic a persisted record so the client receives a valid shape.
+    const inquiry: Inquiry = {
+      id: this.idCounter++,
+      createdAt: new Date(),
+      ...insertInquiry,
+    };
+
+    // eslint-disable-next-line no-console
+    console.warn("Persisting inquiry in memory only; configure DATABASE_URL to enable storage.");
+    return inquiry;
+  }
+}
+
+export const storage: IStorage = databaseEnabled && db
+  ? new DatabaseStorage(db)
+  : new InMemoryStorage();
