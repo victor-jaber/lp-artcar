@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://artcarautomotivo.com.br/sitemap.xml
